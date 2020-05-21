@@ -11,6 +11,9 @@ You must define a context(as in name) of the corpus, the path to the data, and t
 You might also have to download a few Python libraries. Here's the list:
 
 numpy
+
 pandas
+
 nltk.stem
+
 gensim
