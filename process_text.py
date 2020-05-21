@@ -66,16 +66,16 @@ def Main():
 
 	
 	end=time.time()
-	print("["+str(datetime.now())+"]: Processing finished. Elapsed time: ", end-start)
+	print("["+str(get_time())+"]: Processing finished. Elapsed time: ", end-start)
 
 
-	print("["+str(datetime.now())+']: Saving processed corpus to "corpus_'+context+'.csv"')
+	print("["+str(get_time())+']: Saving processed corpus to "corpus_'+context+'.csv"')
 
 	with open("corpus_"+context+".csv", "w") as f:
 		writer = csv.writer(f)
 		writer.writerows(corpus)
 
-	print("["+str(datetime.now())+']: Saving hashmap to "hashmap_'+context+'.json"')
+	print("["+str(get_time())+']: Saving hashmap to "hashmap_'+context+'.json"')
 	with open('hashmap_'+context+'.json', 'w') as f:
 		json.dump(hashmap, f)
 
@@ -87,13 +87,13 @@ def Main():
 	model=trainer(corpus, context)
 
 	end=time.time()
-	print("["+str(datetime.now())+"]: Entire process finished. Elapsed time: ", end-start)
+	print("["+str(get_time())+"]: Entire process finished. Elapsed time: ", end-start)
 
 
 
 def process_corpus(df, hashmap):
 	content=[]
-	print("["+str(datetime.now())+"]: Processing corpuses...")
+	print("["+str(get_time())+"]: Processing corpuses...")
 
 	for i in df.index: 
 		if not pd.isnull(df['name'][i]):
@@ -112,7 +112,7 @@ def process_corpus(df, hashmap):
 	#	fsym.write('\n'.join(df['name'].tolist()))
 
 
-	print("["+str(datetime.now())+"]: Processing documents...")
+	print("["+str(get_time())+"]: Processing documents...")
 
 	document_count=0
 	#substitutes every occuring synonym with their respective labels
@@ -297,10 +297,12 @@ def check_most_common(corpus, length):
 def remove_single_occuring_words(corpus):
 	counting = Counter(x for xs in corpus for x in xs)
 	stopwords=[word for (word, count) in counting.items() if count==1]
-	print("["+str(datetime.now())+"]: Number of words occuring only once: ", len(stopwords))
-	print("["+str(datetime.now())+"]: Removing...")
+	print("["+str(get_time())+"]: Number of words occuring only once: ", len(stopwords))
+	print("["+str(get_time())+"]: Removing...")
 	return [[word for word in sentence if not word in stopwords] for sentence in corpus]
 
+def get_time():
+	return datetime.now().strftime("%H:%M:%S")
 
 if __name__ == '__main__':
 	Main()
